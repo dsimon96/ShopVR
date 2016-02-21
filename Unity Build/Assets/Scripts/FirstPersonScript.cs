@@ -25,7 +25,7 @@ public class FirstPersonScript : MonoBehaviour {
 		float sideSpeed = Input.GetAxis ("Horizontal") * move_speed;
 		
 		CharacterController cc = GetComponent<CharacterController>();
-		Vector3 speed = new Vector3 (sideSpeed, 0, forwardspeed);
+		Vector3 speed = new Vector3 (-sideSpeed, 0, -forwardspeed);
 		speed = transform.rotation * speed;
 		
 		cc.SimpleMove (speed);

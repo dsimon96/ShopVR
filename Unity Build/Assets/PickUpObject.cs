@@ -33,7 +33,7 @@ public class PickUpObject : MonoBehaviour {
 			Ray ray = mainCamera.GetComponent<Camera>().ScreenPointToRay (new Vector3 (x, y));
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit)) {
-				Pickupable p = hit.collider.GetComponent<Pickupable> ();
+				Product p = hit.collider.GetComponent<Product> ();
 				if (p != null) {
 					carrying = true;
 					carriedObject = p.gameObject;
