@@ -15,6 +15,7 @@ public class ShoppingCart : MonoBehaviour {
         contents = new Product[maxSize];
         quantities = new int[maxSize];
         numberItems = 0;
+		UpdateText();
 	}
 
     int ItemIndex (Product item) {
@@ -54,12 +55,19 @@ public class ShoppingCart : MonoBehaviour {
     }
 
     void UpdateText () {
-    	Text list = GameObject.FindWithTag("UItext").GetComponent<Text>();
-    	list.text = "";
-    	for (int i = 0; i < numberItems; i++) {
-    		list.text += string.Format("{0} (x{1})\n", contents[i].productName, quantities[i]);
-    	}
-    }
+		Text list = GameObject.FindWithTag ("UItext").GetComponent<Text> ();
+		list.text = "";
+		int totalDollars = 0;
+		int totalCents = 0;
+		for (int i = 0; i < numberItems; i++) {
+			list.text += string.Format ("{0} (x{1})\n", contents [i].productName, quantities [i]);
+			totalDollars += contents [i].priceDollars * quantities [i];
+			totalCents += contents [i].priceCents * quantities [i];
+		}
+		totalDollars += totalCents / 100;
+		totalCents %= 100;
+		list.text += string.Format ("Total: ${0}.{1,2:00}", totalDollars, totalCents);
+	}
 
     IEnumerator SendAPIRequest(string commands) {
         WWWForm form = new WWWForm();
@@ -81,10 +89,15 @@ public class ShoppingCart : MonoBehaviour {
     }
 
     void ExportItem (Product item, int quantity) {
-        string content = string.Format("Buy %s", item.productName);
-        if (quantity > 1) content += string.Format(" (x%d)", quantity);
+		string content = string.Format("Buy {0}", item.productName);
+		if (quantity > 1) content += string.Format(" (x{0})", quantity);
         string UUID = System.Guid.NewGuid().ToString();
-        string commands = string.Format("[{\"type\": \"item_add\", \"args\": {\"content\": \"%s\"}, \"uuid\":\"%s\", \"temp_id\":\"asdf\"}]", content, UUID);
+		string commands = "[{\"type\": \"item_add\", \"args\": {";
+		commands += string.Format("\"content\": \"{0}\"", content);
+		commands += "}";
+		commands += string.Format(", \"uuid\":\"{0}\", \"temp_id\":\"asdf\"", UUID);
+		commands += "}]";
+		Debug.Log (commands);
         StartCoroutine(SendAPIRequest(commands));
     }
 
@@ -96,6 +109,9 @@ public class ShoppingCart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown ("space")) {
+			ExportContents ();
+		}
 	
 	}
 
@@ -107,4 +123,6 @@ public class ShoppingCart : MonoBehaviour {
 		// restore to original position
 		p.RestorePosition();
 	}
+
+
 }

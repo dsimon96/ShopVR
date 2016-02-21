@@ -1,0 +1,1 @@
+{"priceDollars": 0, "description": "Cinnamon Chex &#45; 13&#46;5&#45;oz&#46;", "priceCents": 0, "TCIN": 12935339, "productName": "Chex Cinnamon 12.1 oz"}
