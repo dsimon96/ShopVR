@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Experimental.Networking;
+using UnityEngine.UI;
 
 public class ShoppingCart : MonoBehaviour {
     private string token = "d08083533559056453e711410cdd13e0dfd24f35";
@@ -31,8 +32,10 @@ public class ShoppingCart : MonoBehaviour {
             quantities[index] += 1;
         } else if (numberItems < maxSize) {
             contents[numberItems] = item;
+			quantities [numberItems] = 1;
             numberItems++;
         }
+        UpdateText();
     }
 
     void RemoveItem (Product item) {
@@ -47,6 +50,15 @@ public class ShoppingCart : MonoBehaviour {
                 numberItems -= 1;
             }
         }
+        UpdateText();
+    }
+
+    void UpdateText () {
+    	Text list = GameObject.FindWithTag("UItext").GetComponent<Text>();
+    	list.text = "";
+    	for (int i = 0; i < numberItems; i++) {
+    		list.text += string.Format("{0} (x{1})\n", contents[i].productName, quantities[i]);
+    	}
     }
 
     IEnumerator SendAPIRequest(string commands) {
@@ -85,5 +97,14 @@ public class ShoppingCart : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void OnCollisionEnter (Collision col)
+	{
+		Product p = col.gameObject.GetComponent<Product>();
+		// add to cart
+		AddItem(p);
+		// restore to original position
+		p.RestorePosition();
 	}
 }

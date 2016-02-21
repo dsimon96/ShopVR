@@ -51,7 +51,9 @@
      <Compile Include="Assets\PickUpObject.cs" />
      <Compile Include="Assets\Product.cs" />
      <Compile Include="Assets\Scripts\FirstPersonScript.cs" />
+     <Compile Include="Assets\ShoppingCart.cs" />
      <Compile Include="Assets\Temp.cs" />
+     <None Include="Assets\LEGO Jurassic World Indominus rex Breakout 75919.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
