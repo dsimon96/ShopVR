@@ -151,4 +151,3 @@ def productImgFile(imgURL, name):
     filename = name + '.png'
     urllib.urlretrieve(imgURL, filename)
 
-productInfo('TCIN', '16248304')
