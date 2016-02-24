@@ -8,14 +8,10 @@ public class FirstPersonScript : MonoBehaviour {
 	public float camera_speed = 3.0f;
 	public float controller_speed = 2.0f;
 
-	SerialPort Arduino = new SerialPort("COM10", 9600);
+	//SerialPort Arduino = new SerialPort("COM10", 9600);
 
 	// Use this for initialization
-	void Start () {
-		Arduino.Open ();
-		Arduino.ReadTimeout = 1;
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		/*
